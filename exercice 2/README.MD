@@ -4,7 +4,7 @@ Créer le fichier `dashboard.php`. Y copier-coller le tableau multidimensionnel 
 
 ### Exercice 2
 
-Modifier l’affichage précédent pour en faire un lien HTML cliquable. Le lien doit pointer vers `sale.php?id=` suivi de l’index de la vente dans le tableau (utiliser `$key => $sale`).
+Modifier l’affichage précédent pour en faire un lien HTML cliquable. Le lien doit pointer vers `sale.php?id=` suivi de l’index de la vente dans le tableau (utiliser l'index pour retrouver la vente).
 
 ### Exercice 3
 
