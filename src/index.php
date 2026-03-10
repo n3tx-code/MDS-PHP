@@ -42,28 +42,36 @@
         <?php
     }
 
+// association array
 $property = [
     "title" => "Appartement T3",
     "price" => 250000,
     "city" => "Lyon"
 ];
 
+// debug display
 var_dump($property); ?>
 <br/>
 <?php print_r($property); ?>
 <br/>
 <?php var_export($property); ?>
 </br>
+
+<!-- Accessing data in association array -->
 <p>Nom de la propriété : <?= $property["title"] ?></p>
 <p>Prix de la propriété : <?= $property["price"] ?></p>
 <p>Ville de la propriété : <?= $property["city"] ?></p>
 <hr>
-<?php
-$cities = ["Lyon", "Paris", "Toulouse", "Marseille", "Bordeaux", "Lille", "Strasbourg"];
 
+<?php
+// Loop on a array
+$cities = ["Lyon", "Paris", "Toulouse", "Marseille", "Bordeaux", "Lille", "Strasbourg"];
 ?>
 <ul>
     <?php foreach($cities as $city) { ?>
         <li>Agence de :  <?= $city; ?></li>
     <?php } ?>
 </ul>
+
+<!-- Link with GET parameters -->
+<a href="agency.php?city=Lyon&agent=John">Voir l'agence de Lyon</a>
