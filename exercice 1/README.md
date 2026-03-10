@@ -71,3 +71,4 @@ Créer un tableau indexé `$salesHistory` contenant les **3 dernières ventes** 
   - la commission,
   - la valeur de la vente.
 
+Correction : [agent.php](https://github.com/n3tx-code/MDS-PHP/blob/7f4b972f0818c0a8792275ec317647125a28fbe7/src/agent.php)
