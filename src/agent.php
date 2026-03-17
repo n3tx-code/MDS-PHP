@@ -115,3 +115,5 @@ echo "<p>Mon endroit préféré à Lyon : " . $favoritePlace . "</p>";
         <?php } ?>
     </tbody>
 </table>
+
+<a href="dashboard.php">Voir le détail de mes ventes</a>
