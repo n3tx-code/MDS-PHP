@@ -7,6 +7,14 @@
 
 <?php
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') { ?>
+    <p class="error">
+        Erreur : cette page doit être appelée via une requête POST. <br/>Vous pouvez le faire depuis le <a href="add_property.php">formulaire de création d'annonce</a>.
+    </p>
+<?php
+    exit;
+}
+
 $errors = [];
 $allowedDistricts = ["Lyon Centre", "Confluence", "Bellecour", "Dauphiné Lacassagne", "Croix-Rousse", "Villeurbanne"];
 $title = "Aucun titre";
