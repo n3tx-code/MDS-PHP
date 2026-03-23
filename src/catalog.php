@@ -15,10 +15,12 @@ $path = "properties.csv";
     <header>
         <a href="add_property.php">ajouter un bien</a>
     </header>
+    <!-- If the CSV exists, read it and display each line -->
     <?php if (file_exists($path)) {?>
     <ul>
         <?php
         $file = fopen($path, "r");
+        // Read the CSV line by line into an array
         while (($property = fgetcsv($file)) !== false) {
         ?>
             <li><?= $property[0]; ?></li>

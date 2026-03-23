@@ -13,6 +13,7 @@ function calculateQuarterMeterPrice($surface, $price) {
     return $price / $surface;
 }
 
+// Escape HTML and remove extra spaces
 function sanitizeInput($input) {
     if (empty($input)) {
         return "";
@@ -21,10 +22,12 @@ function sanitizeInput($input) {
     return trim($cleanData);
 }
 
+// Read query string data (GET)
 if (isset($_GET['source'])) {
     $source = sanitizeInput($_GET['source']);
 }
 
+// Read form data (POST)
 if (isset($_POST['title'])) {
     $title = sanitizeInput($_POST['title']);
 }
@@ -39,6 +42,7 @@ if (isset($_POST['propertySurface'])) {
 
 $quarterMeterPrice = 0;
 
+// If the price and the surface are set, calculate the price per square meter
 if (isset($_POST['propertyPrice']) && isset($_POST['propertySurface'])) {
     $quarterMeterPrice = calculateQuarterMeterPrice($surface, $price);
 }

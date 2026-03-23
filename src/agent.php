@@ -10,6 +10,7 @@ echo "Monsieur <strong>" . $agentName . "</strong> vend depuis <em>" . $yearsExp
 
 <!-- Exercice 3 -->
 <?php
+// Check if the agent is "senior" based on experience
 if ($yearsExperience > 5) {
     echo "Agent Senior";
 } else {
@@ -22,6 +23,7 @@ if ($yearsExperience > 5) {
 $totalCommission = 0;
 $contractsCount = 0;
 
+// Keep adding random commissions until we reach 5000
 while ($totalCommission < 5000) {
     // $totalCommission = totalCommission + rand(500, 1500);
     $comission = rand(500, 1500);
@@ -34,6 +36,7 @@ echo "<p>Contrat nécessaire avant bonus : " . $contractsCount . "</p>";
 
 <!-- Exercice 5 -->
 <?php
+// Print 3 stars using a for loop
 for($i = 0; $i < 3; $i++) {
     echo "*";
 }
@@ -48,6 +51,7 @@ echo "<p>Mon endroit préféré à Lyon : " . $favoritePlace . "</p>";
 
 <!-- Exercice 7 -->
 <ul>
+    <!-- Loop through all sectors and display them as list items -->
     <?php foreach($sectors as $sector) { ?>
         <li>
             <?= $sector ?>
@@ -58,6 +62,7 @@ echo "<p>Mon endroit préféré à Lyon : " . $favoritePlace . "</p>";
 
 <!-- Exercice 8 -->
 <?php
+    // Associative array: store details of the last sale
     $lastSale = [
         "clientName" => "Marie Martin",
         "propertyType" => "Appartement T3",
@@ -105,6 +110,7 @@ echo "<p>Mon endroit préféré à Lyon : " . $favoritePlace . "</p>";
         </tr>
     </thead>
     <tbody>
+        <!-- Loop sales histories and create one table row per sale -->
         <?php foreach($salesHistories as $saleHistory) { ?>
             <tr>
                 <th scope="row"><?= $saleHistory["clientName"]; ?></th>

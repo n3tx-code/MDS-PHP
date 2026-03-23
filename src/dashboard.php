@@ -24,7 +24,9 @@ $salesHistories = [
 <h2>Mes ventes</h2>
 <ul>
     <?php 
+        // Used to create a unique index for the link (sale.php?id=...)
         $count = 0;
+        // Loop over each sale and print one <li> with a link
         foreach($salesHistories as $sale) {
             ?>
                 <li>

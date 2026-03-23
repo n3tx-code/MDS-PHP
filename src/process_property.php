@@ -6,7 +6,7 @@
 </style>
 
 <?php
-
+// This page expects data from a POST form submission
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { ?>
     <p class="error">
         Erreur : cette page doit être appelée via une requête POST. <br/>Vous pouvez le faire depuis le <a href="add_property.php">formulaire de création d'annonce</a>.
@@ -16,12 +16,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') { ?>
 }
 
 $errors = [];
+
 $allowedDistricts = ["Lyon Centre", "Confluence", "Bellecour", "Dauphiné Lacassagne", "Croix-Rousse", "Villeurbanne"];
 $title = "Aucun titre";
 $price = 0;
 $surface = 0;
 $district = "Aucun quartier";
 
+// Simple cleaning: escape HTML + trim spaces
 function cleanData($input) {
     if (isset($input)) {
         $cleanInput = htmlspecialchars($input);
@@ -34,6 +36,7 @@ $price = cleanData($_POST['price']);
 $surface = cleanData($_POST['surface']);
 $district = cleanData($_POST['district']);
 
+// Validate required fields
 if (empty($title)) { 
     array_push($errors, "Erreur : le champ Titre est vide");
 }
@@ -50,10 +53,12 @@ if (empty($district)) {
     array_push($errors, "Erreur : le champ Quartie est vide");
 }
 
+// Validate district value against the allowed list
 if (!in_array($district, $allowedDistricts)) { 
     array_push($errors, "Erreur : quartier inconnue");
 }
 
+// Convert numbers from strings and validate ranges
 $price = intval($price);
 if ($price <= 0) { 
         array_push($errors, "Erreur : le prix est invalide");
@@ -64,6 +69,7 @@ if ($surface <= 0) {
     array_push($errors, "Erreur : la surface est invalide");
 }
 
+// Compute price per square meter (price / surface)
 $pricePerSqm = 0;
 if ($surface > 0) {
     $pricePerSqm = $price / $surface; ?>
@@ -72,9 +78,13 @@ if ($surface > 0) {
     array_push($errors, "Erreur : Surface invalide pour calcul m2");
 }
 
+// If valid: append the new property to the CSV file
 if(empty($errors)) {
+    // Set the timezone to Paris
     date_default_timezone_set('Europe/Paris');
+    // Get the current date and time
     $currentDate = date("d/m/Y H:i:s");
+    // Create a new property array
     $newProperty = [
         "title" => $title,
         "price" => $price,
@@ -86,11 +96,13 @@ if(empty($errors)) {
 
     $fileName = "properties.csv";
     $file = fopen($fileName, 'a');
+    // Write the new property to the CSV file
     fputcsv($file, $newProperty);
     fclose($file);
 
     echo "Annonce ajoutée sur " . $district . ": " . $title . ", " . $price . "€, " . $surface . "m² (Prix au m² : " . $pricePerSqm . "€/m²).";
 } else {
+    // If invalid: show the list of errors
     foreach ($errors as $error) { ?>
         <li class="error"><?php echo $error; ?> </li>
         <?php } ?> 
