@@ -72,9 +72,23 @@ if ($surface > 0) {
     array_push($errors, "Erreur : Surface invalide pour calcul m2");
 }
 
-var_dump($errors);
-
 if(empty($errors)) {
+    date_default_timezone_set('Europe/Paris');
+    $currentDate = date("d/m/Y H:i:s");
+    $newProperty = [
+        "title" => $title,
+        "price" => $price,
+        "surface" => $surface,
+        "pricePerSqm" => $pricePerSqm,
+        "district" => $district,
+        "createAt" => $currentDate
+    ];
+
+    $fileName = "properties.csv";
+    $file = fopen($fileName, 'a');
+    fputcsv($file, $newProperty);
+    fclose($file);
+
     echo "Annonce ajoutée sur " . $district . ": " . $title . ", " . $price . "€, " . $surface . "m² (Prix au m² : " . $pricePerSqm . "€/m²).";
 } else {
     foreach ($errors as $error) { ?>
