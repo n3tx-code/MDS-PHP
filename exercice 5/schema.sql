@@ -8,15 +8,15 @@ CREATE TABLE districts (
 
 CREATE TABLE agents (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    first_name VARCHAR(250) NOT NULL,
+    last_name VARCHAR(250) NOT NULL,
+    email VARCHAR(250) NOT NULL UNIQUE,
     experience_years INT DEFAULT 0
 );
 
 CREATE TABLE properties (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+    title VARCHAR(250) NOT NULL,
     price INT NOT NULL,
     area INT NOT NULL,
     district_id INT NOT NULL,
