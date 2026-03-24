@@ -1,4 +1,15 @@
+<?php
+session_start();
+
+// Check that the user is logged in by checking the session variable agent_id
+if (!isset($_SESSION['agent_id'])) {
+    header('Location: login.php');
+    die();
+}
+?>
 <h1>Dashboard</h1>
+<!-- Display the agent name from the session variable agent_name -->
+<h2>Hello <?= $_SESSION['agent_name']; ?></h2>
 <?php
 $salesHistories = [
         [

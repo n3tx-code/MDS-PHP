@@ -1,37 +1,10 @@
 <?php
-// Database connection settings
-$host = 'localhost';
-$dpName = 'real_estate';
-$user = 'root';
-$mdp = 'root';
- 
-// DSN: tells PDO where the database is and which charset to use
-$pdn = 'mysql:host=' . $host . ';dbname=' . $dpName . ';charset=utf8mb4';
- 
-try {
-    // Create the PDO connection and enable helpful error messages
-    // ERRMODE: throws an error (exception) instead of hiding problems
-    // DEFAULT_FETCH_MODE: returns rows as an associative array (column => value)
-    $pdo = new PDO ($pdn, $user, $mdp);
-    $pdo -> setAttribute(PDO:: ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $pdo -> setAttribute(PDO:: ATTR_DEFAULT_FETCH_MODE, PDO:: FETCH_ASSOC);
-} catch (EXCEPTION $e){
-    echo 'Erreur de connexion : ' . $e -> getMessage();
-    die();
-}
+require_once 'database.php';
+require_once 'functions.php';
 
-// Load all properties from the database
 $sqlSelectAllProperties = "SELECT * FROM properties";
 $query = $pdo->query($sqlSelectAllProperties);
-// Fetch all the results. It returns an array of associative arrays.
-$properties = $query->fetchAll(); 
-
-function priceM2($area, $price) {
-    if ($area <= 0) {
-        return 0;
-    }
-    return $price/$area;
-}
+$properties = $query->fetchAll();
 
 function propertyCategory($propertyPrice) {
     if ($propertyPrice > 500000) {

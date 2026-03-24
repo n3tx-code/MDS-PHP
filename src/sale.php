@@ -1,5 +1,4 @@
 <?php
-// If a source is provided in the URL, sanitize and display it
 if(isset($_GET["source"])) {
     $source = htmlspecialchars($_GET["source"]);
     if($source == "dashboard") {
@@ -8,7 +7,6 @@ if(isset($_GET["source"])) {
 }
 
 
-// Sample sales data (we will select one item using an id)
 $salesHistories = [
         [
             "clientName" => "Jean",
@@ -30,15 +28,12 @@ $salesHistories = [
         ],
     ];
 
-// Read sale id from the URL and make sure it's numeric
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $id = $_GET['id'];
     
-    // Check the id is inside the array range
     if ($id >= 0 && $id < count($salesHistories)) {
         $sale = $salesHistories[$id];
         ?>
-        <!-- Display the selected sale details -->
         <h1>Détail de la vente</h1>
         Client : <?= $sale["clientName"] ?> <br/>
         Type de bien : <?= $sale["propertyType"] ?> <br/>

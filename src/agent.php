@@ -1,125 +1,73 @@
-<!-- Exercice 1 & 2 -->
-<h1>Agence féérique</h1>
 <?php
-$agentName = "Roger";
-$yearsExperience = 7;
-$totalSales = 10000;
+require_once 'database.php';
+require_once 'functions.php';
 
-echo "Monsieur <strong>" . $agentName . "</strong> vend depuis <em>" . $yearsExperience . "ans</em> et a réalisé <strong>" . $totalSales . "</strong> ventes. <br/>"; 
-?>
 
-<!-- Exercice 3 -->
-<?php
-// Check if the agent is "senior" based on experience
-if ($yearsExperience > 5) {
-    echo "Agent Senior";
-} else {
-    echo "Agent Junior";
+if (!isset($_GET['id']) && empty($_GET['id'])) {
+    echo "l'id est nécessaire";
+    die();
 }
+
+$errors = [];
+
+$id = cleanData($_GET['id'], 'id', $errors);
+
+$sqlSelect = "SELECT * FROM agents WHERE id = :id";
+$stmtSelect = $pdo->prepare($sqlSelect);
+$stmtSelect->execute([
+    'id' => $id,
+]);
+$result = $stmtSelect->fetch();
 ?>
 
-<!-- Exercice 4 -->
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title><?= $result['first_name']; ?> <?= $result['last_name'] ?></title>
+    <link rel="stylesheet" href="css/style.css" >
+</head>
+<body>
+
+
+<div class="navbar">
+    <div class="navbar-logo">🏠 RealEstate</div>
+
+    <div class="navbar-links">
+        <a href="index.php">Accueil</a>
+        <a href="property_list.php">Liste des biens</a>
+        <a href="agent_list.php">Nos agents</a>
+    </div>
+</div>
+    <?php if($result) {
+        ?>
+        <div class="container">
+    <div class="card">
+        <h1><?= $result['first_name']; ?> <?= $result['last_name'] ?></h1>
+
+        <?php foreach ($result as $key => $value): ?>
+            <div class="info">
+                <span class="label"><?= htmlspecialchars($key) ?> :</span>
+                <span><?= htmlspecialchars($value) ?></span>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
 <?php
-$totalCommission = 0;
-$contractsCount = 0;
+    } else {
+        ?>
+        <div class="error-container">
+    <div class="error-card">
+        <div class="error-icon">🔍</div>
+        <div class="error-title">Aucun résultat</div>
+        <div class="error-text">
+            Le bien que vous recherchez n'existe pas ou a été supprimé.
+        </div>
+        <a href="index.php" class="error-btn">Retour</a>
+    </div>
+</div>
+<?php } ?>
 
-// Keep adding random commissions until we reach 5000
-while ($totalCommission < 5000) {
-    // $totalCommission = totalCommission + rand(500, 1500);
-    $comission = rand(500, 1500);
-    var_dump($comission);
-    $totalCommission += rand(500, 1500);
-    $contractsCount++;
-}
-echo "<p>Contrat nécessaire avant bonus : " . $contractsCount . "</p>";
-?>
-
-<!-- Exercice 5 -->
-<?php
-// Print 3 stars using a for loop
-for($i = 0; $i < 3; $i++) {
-    echo "*";
-}
-?>
-
-<!-- Exercice 6 -->
-<?php
-$sectors = ["Lyon Centre", "Villeurbanne", "Lyon Part-Dieu", "Lyon Confluence"];
-$favoritePlace = $sectors[3];
-echo "<p>Mon endroit préféré à Lyon : " . $favoritePlace . "</p>";
-?>
-
-<!-- Exercice 7 -->
-<ul>
-    <!-- Loop through all sectors and display them as list items -->
-    <?php foreach($sectors as $sector) { ?>
-        <li>
-            <?= $sector ?>
-        </li>   
-    <?php } ?>
-<ul>
-
-
-<!-- Exercice 8 -->
-<?php
-    // Associative array: store details of the last sale
-    $lastSale = [
-        "clientName" => "Marie Martin",
-        "propertyType" => "Appartement T3",
-        "commission" => 8500
-    ];
-
-    echo $lastSale["clientName"] . "<br/>";
-    echo $lastSale["propertyType"] . "<br/>";
-    echo $lastSale["commission"] . "<br/>";
-
-?>
-
-<!-- Exercice 9 -->
-<?php
-    $salesHistories = [
-        [
-            "clientName" => "Jean",
-            "propertyType" => "Appartement",
-            "commission" => 1200,
-            "saleValue" => 250000
-        ],
-        [
-            "clientName" => "Madeleine",
-            "propertyType" => "Appartement",
-            "commission" => 1000,
-            "saleValue" => 220000
-        ],
-        [
-            "clientName" => "Macron",
-            "propertyType" => "Appartement",
-            "commission" => 1400,
-            "saleValue" => 260000
-        ],
-    ];
-?>
-
-<!-- Exercice 10 -->
-<table>
-    <thead>
-        <tr>
-            <th scope="col">Nom</th>
-            <th scope="col">Type</th>
-            <th scope="col">Commission</th>
-            <th scope="col">Valeur</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Loop sales histories and create one table row per sale -->
-        <?php foreach($salesHistories as $saleHistory) { ?>
-            <tr>
-                <th scope="row"><?= $saleHistory["clientName"]; ?></th>
-                <th scope="row"><?= $saleHistory["propertyType"]; ?></th>
-                <th scope="row"><?= $saleHistory["commission"]; ?> €</th>
-                <th scope="row"><?= $saleHistory["saleValue"]; ?> €</th>
-            </tr>
-        <?php } ?>
-    </tbody>
-</table>
-
-<a href="dashboard.php">Voir le détail de mes ventes</a>
+</body>
+</html>
