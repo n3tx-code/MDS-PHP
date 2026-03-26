@@ -1,11 +1,14 @@
 <?php
+// Load database connection + helper functions
 require_once 'database.php';
 require_once 'functions.php';
 
+// Load all properties so we can display them in the table
 $sqlSelectAllProperties = "SELECT * FROM properties";
 $query = $pdo->query($sqlSelectAllProperties);
 $properties = $query->fetchAll();
 
+// Choose a category label based on the price
 function propertyCategory($propertyPrice) {
     if ($propertyPrice > 500000) {
         return "Luxe";
@@ -26,15 +29,10 @@ function propertyCategory($propertyPrice) {
 <link rel="stylesheet" href="css/style.css" >
 </head>
 <body>
-
-<div class="navbar">
-    <div class="navbar-logo">🏠 RealEstate</div>
-
-    <div class="navbar-links">
-        <a href="index.php">Accueil</a>
-        <a href="property_list.php">Liste des biens</a>
-    </div>
-</div>
+<?php
+// Top navigation
+require_once 'navbar.php';
+?>
 <div class="container">
     <h1>🏠 Nos propriétés</h1>
 
@@ -49,11 +47,12 @@ function propertyCategory($propertyPrice) {
             </thead>
             <tbody>
                 <?php
+                    // Render one table row per property
                     foreach($properties as $property) {
                         ?>
                         <tr>
                             <td>
-                                <a href="property.php?id=<?= $property['id']; ?>">
+                                <a href="/property/property.php?id=<?= $property['id']; ?>">
                                     <?= $property['title']; ?> - <?= $property['price']; ?> € - 
                                     <?= $property['area']; ?> - <?= $property['district_id']; ?>
                                 </a>

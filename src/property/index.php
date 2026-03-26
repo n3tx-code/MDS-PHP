@@ -1,7 +1,6 @@
 <?php
-// Load the current session and database connection
-require_once 'session.php';
-require_once 'database.php';
+// Load PDO database connection
+require_once '../database.php';
 ?>
 
 <!DOCTYPE html>
@@ -13,9 +12,11 @@ require_once 'database.php';
 </head>
 <body>
     <?php
-require_once 'navbar.php';
+// Integrate the top navigation
+require_once '../navbar.php';
 
-// Load all properties for the dashboard list
+
+// Load all properties for the list
 $querySelectProperties = "SELECT * FROM properties";
 $query = $pdo->query($querySelectProperties);
 $properties = $query->fetchAll();
@@ -25,7 +26,7 @@ $selectDistrict = "SELECT * FROM districts";
 $queryDistricts = $pdo -> query($selectDistrict);
 $districts = $queryDistricts -> fetchAll();
 
-// Show a success message if the success parameter is set to true in the URL
+// Show feedback after a successful property creation
 if (isset($_GET["succes"]) && $_GET["succes"] == "true") {
     ?>
     <p style="color: green">
@@ -34,26 +35,12 @@ if (isset($_GET["succes"]) && $_GET["succes"] == "true") {
     <?php
 }
 ?>
-<h1>Dashboard</h1>
-<h2>Hello <?= $_SESSION['agent_name']; ?> (<?= $_SESSION['agent_id']; ?>)</h2>
-<?php
-    // Display the message stored in the session if it exists
-    if (isset($_SESSION["message"])) {
-        ?>
-        <h3><?= $_SESSION["message"]; ?></h3>
-        <?php
-        // Remove the message from the session so it is not displayed again
-        unset($_SESSION["message"]);
-    }
-?>
+
 <ul>
     <?php foreach($properties as $property) {
         ?>
-            <li>
-                <?= $property["title"]; ?> | 
-                <a href="update_property.php?id=<?= $property['id']; ?>">Modifier</a> |
-                <a href="delete_property.php?id=<?= $property['id']; ?>">Supprimer</a>
-            </li>
+            <li><?= $property["title"]; ?> | 
+            <a href="update_property.php?id=<?= $property['id']; ?>">Modifier</a></li>
         <?php
     } ?>
 <ul>
